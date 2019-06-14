@@ -1,7 +1,13 @@
 <template>
   <div id="app">
-    {{fatura.adi}}
-    {{fatura.soyadi}}
+    <h4>
+      {{fatura.adi}}
+      {{fatura.clientX.toFixed(0)}}
+      {{fatura.clientY.toFixed(0)}}
+    </h4>
+    <div id="a4" @mousemove="yakala" @mouseout="cikti" @click="tikladi" @dblclick="tiklaiptal" ref="yakala">
+
+    </div>
   </div>
 </template>
 
@@ -11,9 +17,29 @@ export default {
   data(){
     return {
       fatura:{
-        adi:'Ahmet',
-        soyadi:'Koçoğlu'
+        dur: false,
+        adi: 'Fatura Dizaynı',
+        clientX: 0,
+        clientY: 0
       }
+    }
+  },
+  methods:{
+    yakala(event){
+      if (this.fatura.dur === false) {
+        this.fatura.clientX = event.clientX - this.$refs.yakala.getBoundingClientRect().left;
+        this.fatura.clientY = event.clientY - this.$refs.yakala.getBoundingClientRect().top;
+      }
+    },
+    cikti(){
+      this.fatura.clientX=0;
+      this.fatura.clientY=0;
+    },
+    tikladi(){
+      this.fatura.dur = true;
+    },
+    tiklaiptal(){
+      this.fatura.dur = false;
     }
   }
 }
@@ -27,6 +53,15 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin: 0;
-
+}
+#app h4{
+  margin: 0;
+  padding: 0 0 5px 0;
+}
+#a4{
+  width: 200mm;
+  height: 287mm;
+  border: 1px solid #000000;
+  margin: 0 auto;
 }
 </style>
